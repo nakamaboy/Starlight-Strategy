@@ -1,0 +1,36 @@
+Code Safe Keeping
+
+
+
+
+
+AttackForwardBut.onClick.RemoveListener(SelectedGenUnit.AttackForward);
+AttackBackBut.onClick.RemoveListener(SelectedGenUnit.AttackBack);
+AttackLeftBut.onClick.RemoveListener(SelectedGenUnit.AttackLeft);
+AttackRightBut.onClick.RemoveListener(SelectedGenUnit.AttackRight);
+MainAttackBut.onClick.RemoveListener(AttackOptionsSetMeth);
+MainMoveBut.onClick.RemoveListener(MoveOptionsSetMeth);
+SwitchStanceBut.onClick.RemoveListener(SelectedGenUnit.SwitchStance);
+MoveForwardBut.onClick.RemoveListener(SelectedGenUnit.MoveForward);
+MoveBackBut.onClick.RemoveListener(SelectedGenUnit.MoveBackwards);
+MoveLeftBut.onClick.RemoveListener(SelectedGenUnit.MoveLeft);
+MoveRightBut.onClick.RemoveListener(SelectedGenUnit.MoveRight);
+
+
+public void Unselected()
+   {
+       AttackOptions = gameObject.transform.GetChild(0);
+       MainOptions = gameObject.transform.GetChild(1);
+       MoveOptions = gameObject.transform.GetChild(2);
+       AttackOptions.gameObject.SetActive(false);
+       MainOptions.gameObject.SetActive(false);
+       MoveOptions.gameObject.SetActive(false);
+       transform.GetComponent<MeshRenderer>().material = controller.originalMaterial;
+
+    }
+
+
+
+
+There is a glitch where if you try to assign the prefabs for controller, CardtipUI etc in Awake the buttons and the assignments become wrong in Updates of that unit
+The cause most likely is that the prefab in your prefab folder and the Controller, cardtipUI, DeckManager on the field are two different entities. 

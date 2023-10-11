@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6270cb1d5526413408bdefcb411c55c7, type: 3}
+  m_Name: YangXiaoLong
+  m_EditorClassIdentifier: 
+  id: 4
+  cardName: Yang Xiao Long
+  nickName: I burn
+  rank: 0
+  type1: Human
+  type2: Hunter
+  type3: Beacon Academy
+  type4: RWBY
+  type5: Remnant
+  type6: Fire
+  type7: 
+  type8: 
+  healthtext: HP
+  health: 4
+  atktext: Atk
+  atk: 8
+  suptext: Sup
+  sup: 0
+  mindtext: Mind
+  mind: 0
+  deftext: Def
+  def: 0
+  mdeftext: MDef
+  mdef: 0
+  agitext: Agi
+  agility: 4
+  stance0Text: 
+  stance1Stattext1: Sup
+  stance1Stat1: 0
+  stance1Stattext2: 
+  stance1Stat2: 0
+  stance1Stattext3: 
+  stance1Stat3: 0
+  stance1Stattext4: 
+  stance1Stat4: 0
+  stance1Text: "If self\u2019s HP is 5 or lower: Double the Atk of self."
+  stance2Stattext1: Sup
+  stance2Stat1: 3
+  stance2Stattext2: 
+  stance2Stat2: 0
+  stance2Stattext3: 
+  stance2Stat3: 0
+  stance2Stattext4: 
+  stance2Stat4: 0
+  stance2Text: '[Shotgun dash]/200 MP/: Warp user to 8.'
+  cardPicture: {fileID: 21300000, guid: b90e7a066f477374b944d37067fae9d9, type: 3}
+  SupMe: 0
+  rageatk: 8
