@@ -7,9 +7,18 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.UI;
+using static UnityEditor.SearchableEditorWindow;
 
 public class DeckManager : MonoBehaviour
 {
+    [Header("Bools")]
+    public bool SearchDone;
+
+
+
+    
+
+
     public GameCon1 controller;
     public int CardsinHand;
     public TurnManager TurnMan;
@@ -21,23 +30,34 @@ public class DeckManager : MonoBehaviour
     public GameObject Deckholder6;
     public int x;
     public int deckSize;
+    public int y;
     public GameObject HandHolder;
-    public List<GameObject> HandCard = new List<GameObject>();
-    public List<GenUnit> HandCardScript = new List<GenUnit>();
+   
     public GameObject HandCard2;
     public Coroutine GStartCour;
-    public Transform DeckSearchPanel;
+    public Transform DeckSearchCanv;
 
     public Button DeckCardBut;
+    
     public Transform GridContent;
 
+    [Header("Lists")]
+    public List<GameObject> HandCard = new List<GameObject>();
+    public List<GenUnit> HandCardScript = new List<GenUnit>();
     public List<GameObject> Deck = new List<GameObject>();
     public List<GameObject> container = new List<GameObject>();
+    public List<Button> DeckSearchBut = new List<Button>();
+
+
+
+
+
+
+
     // Start is called before the first frame update
     void Start()
     {
-
-
+        SearchDone = false;
 
         x = 0;
         deckSize = 50;
@@ -49,10 +69,8 @@ public class DeckManager : MonoBehaviour
 
         }
 
+        
 
-       
-
-        //        StartCoroutine(StartingHandGet());
 
 
 
@@ -265,15 +283,34 @@ public class DeckManager : MonoBehaviour
 
     public void DeckSearchDisplay()
     {
+        DeckSearchCanv.gameObject.SetActive(true);
         foreach (GameObject card in Deck)
         {
-            DeckCardBut = Instantiate(DeckCardBut, GridContent.transform); 
-
+            DeckCardBut = Instantiate(DeckCardBut, GridContent.transform);
+            DeckCardBut.name = card.name;
             DeckCardBut.image.sprite = card.GetComponent<GenUnit>().UnitData.cardPicture;
-              
+            int c = DeckCardBut.transform.GetSiblingIndex();
+            DeckCardBut.onClick.AddListener(() => SearchACard(c)) ;
 
         }
+
+       
     }
+
+//    public void DeckSearchDisplay2nd()
+//    {
+//        DeckSearchCanv.gameObject.SetActive(true);
+//        for (int i = 0; i < deckSize; i++)
+//        {
+//            DeckSearchBut[i].name = Deck[i].name;
+//            DeckSearchBut[i].image.sprite = Deck[i].GetComponent<GenUnit>().UnitData.cardPicture;
+//            DeckSearchBut[i] = Instantiate(DeckSearchBut[i], GridContent.transform);
+//            DeckSearchBut[i].onClick.AddListener(delegate { SearchACard(i); }) ;
+
+//        }
+
+
+//    }
 
     public IEnumerator StartingHandDraw()
     {
@@ -295,12 +332,40 @@ public class DeckManager : MonoBehaviour
             }
                           
 
-        }
-        
-        
+        }       
 
         
     }
+
+    public void SearchACard(int z)
+    {
+        if (CardsinHand == 12)
+        {
+            SearchDone = true;
+            DeckSearchCanv.gameObject.SetActive(false);
+            DeckCardBut.onClick.RemoveAllListeners();
+            return;
+            
+
+        }
+        else
+        {
+            Debug.Log($"z is equal to {z}");
+            HandCard2 = Instantiate(Deck[z] , new Vector3(6.9f, 0.5f, 1), Quaternion.identity, HandHolder.transform) as GameObject;
+            deckSize -= 1;
+            CardsinHand += 1;
+            Deck.RemoveRange(z, 1);
+            Invoke("MoveCardtoHand", 0.001f);
+            SearchDone = true;
+            DeckSearchCanv.gameObject.SetActive(false);
+            DeckCardBut.onClick.RemoveAllListeners();
+            
+
+        }
+    }
+
+
+
 
     public void DrawACard()
     {
@@ -329,19 +394,5 @@ public class DeckManager : MonoBehaviour
         
 
     }
-    IEnumerator StartingHandGet()
-    {
-        HandCard = new List<GameObject>();
-        HandCardScript = new List<GenUnit>();
-        for (int i = 0; i < 8; i++)
-        {           
-            HandCard.Add(Instantiate(Deck[i], new Vector3(6.9f, 0.5f, 1), Quaternion.identity, HandHolder.transform));
-            deckSize -= 1;
-            HandCardScript.Add(HandCard[i].GetComponent<GenUnit>());
-            HandCardScript[i].desiredPosition = new Vector3(1, 5, 1);
-            Debug.Log($"Handcard{i}'s Desired position is {HandCardScript[i].desiredPosition}");
-            yield return new WaitForSeconds(1);
-
-        }
-    }
+    
 }

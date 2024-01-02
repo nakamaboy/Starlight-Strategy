@@ -29,12 +29,12 @@ MonoBehaviour:
   atktext: Atk
   atk: 4
   suptext: Sup
-  sup: 5
+  sup: 0
   mindtext: Mind
   mind: 0
   deftext: Def
   def: 0
-  mdeftext: Mdef
+  mdeftext: MDef
   mdef: 0
   agitext: Agi
   agility: 4
@@ -47,8 +47,8 @@ MonoBehaviour:
   stance1Stat3: 0
   stance1Stattext4: 
   stance1Stat4: 0
-  stance1Text: "[Ice prison]/100 MP/(Once per life): Put a \u201Cfrozen\u201D token
-    on one unit on the field.  "
+  stance1Text: '[Ice Prison]/100 MP/(1PL): Put a frozen token on chosen unit on the
+    field.'
   stance2Stattext1: Sup
   stance2Stat1: 4
   stance2Stattext2: Mind
@@ -59,4 +59,10 @@ MonoBehaviour:
   stance2Stat4: 0
   stance2Text: 
   cardPicture: {fileID: 21300000, guid: 912488bc7b66bc34e9ca22a1e6e47cb4, type: 3}
+  cardBack: {fileID: 0}
+  cardFrontMat: {fileID: 0}
+  cardBackMat: {fileID: 0}
+  cardScript: {fileID: 0}
   SupMe: 0
+  rageatk: 0
+  startatk: 0

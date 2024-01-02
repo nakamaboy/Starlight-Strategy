@@ -58,16 +58,22 @@ public class YangXiaoLong : GenUnit
         transform.rotation = Quaternion.RotateTowards(transform.rotation, desiredRotation, Time.deltaTime * rotationSpeed);
 
 
+        if (UnitData.health <= 0)
+        {
+            IsDestroyedCard = true;
+        }
+        if (UnitData.health > 0)
+        {
+            IsDestroyedCard = false;
+        }
+
+
         if (transform.position.y == 0)
         {
             IsOnField = true;
             
         }
 
-        if (controller.SelectedUnit != gameObject.transform)
-        {
-
-        }
 
         if (IsinStance1 == true)
         {

@@ -88,6 +88,10 @@ public class GenUnit  : MonoBehaviour
 
     [Header("Status effects")]
     public bool Isfrozen;
+    public bool movementlock;
+    public bool attacklock;
+    public bool switchlock;
+    public bool IsDestroyedCard;
 
 
     public void Awake()
@@ -105,6 +109,10 @@ public class GenUnit  : MonoBehaviour
         Isfrozen = false;
         rotationSpeed = 200;
         IsinStance1 = true;
+        attacklock = false;
+        movementlock = false;
+        switchlock = false;
+        IsDestroyedCard = false;
         
 //        TurnMan = Resources.Load<TurnManager>("Card prefabs/TurnManager 2");
 //        controller = Resources.Load<GameCon1>("Card prefabs/BoardController 1");
@@ -115,7 +123,7 @@ public class GenUnit  : MonoBehaviour
 
     }
 
-    private void Start()
+    void Start()
     {
         
 
@@ -123,7 +131,7 @@ public class GenUnit  : MonoBehaviour
         
             
     }
-    private void Update()
+    void Update()
     {
        
 
@@ -140,6 +148,10 @@ public class GenUnit  : MonoBehaviour
                 DamageDealt = UnitData.mind - EnemyData.mdef;
                 EnemyData.health -= DamageDealt;
                 Invoke("DamageDisplay", 0);
+                attacklock = true;
+                controller.SelectedUnit = null;
+                controller.AttackOptions.gameObject.SetActive(false);
+
 
 
 
@@ -148,6 +160,7 @@ public class GenUnit  : MonoBehaviour
             {
                 if (EnemyData.agility >= UnitData.agility * 2)
                 {
+                    Invoke("MissDisplay", 0);
                     return;
 
                 }
@@ -156,6 +169,9 @@ public class GenUnit  : MonoBehaviour
                     DamageDealt = UnitData.atk - EnemyData.def + controller.SupportingMe;
                     EnemyData.health -= DamageDealt;
                     Invoke("DamageDisplay", 0);
+                    attacklock = true;
+                    controller.SelectedUnit = null;
+                    controller.AttackOptions.gameObject.SetActive(false);
 
                 }
 
@@ -175,22 +191,36 @@ public class GenUnit  : MonoBehaviour
         if (controller.EnemyUnitLeft != null)
         {
             EnemyData = controller.EnemyGenUnitLeft.UnitData;
-            if (EnemyData.agility >= UnitData.agility * 2)
+            TheEnemy = controller.EnemyUnitLeft.gameObject;
+            if (IsMindBattling == true)
             {
-                return;
+                DamageDealt = UnitData.mind - EnemyData.mdef;
+                EnemyData.health -= DamageDealt;
+                Invoke("DamageDisplay", 0);
+                attacklock = true;
+                controller.SelectedUnit = null;
+                controller.AttackOptions.gameObject.SetActive(false);
 
             }
             else
             {
-                if (IsMindBattling == true)
+                
+                if (EnemyData.agility >= UnitData.agility * 2)
                 {
-                    EnemyData.health -= UnitData.mind - EnemyData.mdef;
+                    Invoke("MissDisplay", 0);
+                    return;
 
                 }
 
                 else
                 {
-                    EnemyData.health -= UnitData.atk - EnemyData.def + controller.SupportingMe;
+                    DamageDealt = UnitData.atk - EnemyData.def + controller.SupportingMe;
+                    EnemyData.health -= DamageDealt;
+                    Invoke("DamageDisplay", 0);
+                    attacklock = true;
+                    controller.SelectedUnit = null;
+                    controller.AttackOptions.gameObject.SetActive(false);
+
                 }
             }
 
@@ -209,21 +239,35 @@ public class GenUnit  : MonoBehaviour
         if (controller.EnemyUnitRight != null)
         {
             EnemyData = controller.EnemyGenUnitRight.UnitData;
-            if (EnemyData.agility >= UnitData.agility * 2)
+            TheEnemy = controller.EnemyUnitRight.gameObject;
+            if (IsMindBattling == true)
             {
-                return;
+                DamageDealt = UnitData.mind - EnemyData.mdef;
+                EnemyData.health -= DamageDealt;
+                Invoke("DamageDisplay", 0);
+                attacklock = true;
+                controller.SelectedUnit = null;
+                controller.AttackOptions.gameObject.SetActive(false);
 
             }
+           
             else
             {
-                if (IsMindBattling == true)
+                if (EnemyData.agility >= UnitData.agility * 2)
                 {
-                    EnemyData.health -= UnitData.mind - EnemyData.mdef;
+                    Invoke("MissDisplay", 0);
+                    return;
 
                 }
                 else
                 {
-                    EnemyData.health -= UnitData.atk - EnemyData.def + controller.SupportingMe;
+                    DamageDealt = UnitData.atk - EnemyData.def + controller.SupportingMe;
+                    EnemyData.health -= DamageDealt;
+                    Invoke("DamageDisplay", 0);
+                    attacklock = true;
+                    controller.SelectedUnit = null;
+                    controller.AttackOptions.gameObject.SetActive(false);
+
                 }
             }
 
@@ -241,21 +285,35 @@ public class GenUnit  : MonoBehaviour
         if (controller.EnemyUnitBack != null)
         {
             EnemyData = controller.EnemyGenUnitBack.UnitData;
-            if (EnemyData.agility >= UnitData.agility * 2)
+            TheEnemy = controller.EnemyUnitBack.gameObject;
+            if (IsMindBattling == true)
             {
-                return;
+                DamageDealt = UnitData.mind - EnemyData.mdef;
+                EnemyData.health -= DamageDealt;
+                Invoke("DamageDisplay", 0);
+                attacklock = true;
+                controller.SelectedUnit = null;
+                controller.AttackOptions.gameObject.SetActive(false);
 
             }
+
             else
             {
-                if (IsMindBattling == true)
+                if (EnemyData.agility >= UnitData.agility * 2)
                 {
-                    EnemyData.health -= UnitData.mind - EnemyData.mdef;
+                    Invoke("MissDisplay", 0);
+                    return;
 
                 }
                 else
                 {
-                    EnemyData.health -= UnitData.atk - EnemyData.def + controller.SupportingMe;
+                    DamageDealt = UnitData.atk - EnemyData.def + controller.SupportingMe;
+                    EnemyData.health -= DamageDealt;
+                    Invoke("DamageDisplay", 0);
+                    attacklock = true;
+                    controller.SelectedUnit = null;
+                    controller.AttackOptions.gameObject.SetActive(false);
+
                 }
             }
 
@@ -285,6 +343,9 @@ public class GenUnit  : MonoBehaviour
                 Switchbuddy = controller.SwitchUnitForward.GetComponent<GenUnit>();
                 desiredPosition = gameObject.transform.position + new Vector3(0, 0, +direction);
                 Switchbuddy.desiredPosition = gameObject.transform.position;
+                controller.SelectedUnit = null;
+                movementlock = true;
+                controller.MoveOptions.gameObject.SetActive(false);
                 
             }            
             
@@ -299,6 +360,9 @@ public class GenUnit  : MonoBehaviour
                 else
                 {
                     desiredPosition = gameObject.transform.position + new Vector3(0, 0, +direction);
+                    controller.SelectedUnit = null;
+                    movementlock = true;
+                    controller.MoveOptions.gameObject.SetActive(false);
 
                 }                
 
@@ -327,8 +391,10 @@ public class GenUnit  : MonoBehaviour
             {
                 Switchbuddy = controller.SwitchUnitBack.GetComponent<GenUnit>();                
                 desiredPosition = gameObject.transform.position + new Vector3(0, 0, -direction);
-                Switchbuddy.desiredPosition = gameObject.transform.position;               
-
+                Switchbuddy.desiredPosition = gameObject.transform.position;
+                controller.SelectedUnit = null;
+                movementlock = true;
+                controller.MoveOptions.gameObject.SetActive(false);
             }
             
             else
@@ -342,6 +408,9 @@ public class GenUnit  : MonoBehaviour
                 else
                 {
                     desiredPosition = gameObject.transform.position + new Vector3(0, 0, -direction);
+                    controller.SelectedUnit = null;
+                    movementlock = true;
+                    controller.MoveOptions.gameObject.SetActive(false);
 
                 }
 
@@ -375,6 +444,9 @@ public class GenUnit  : MonoBehaviour
                 Switchbuddy = controller.SwitchUnitLeft.GetComponent<GenUnit>();
                 desiredPosition = gameObject.transform.position + new Vector3(-direction, 0, 0);
                 Switchbuddy.desiredPosition = gameObject.transform.position;
+                controller.SelectedUnit = null;
+                movementlock = true;
+                controller.MoveOptions.gameObject.SetActive(false);
             }           
             else
             {
@@ -387,6 +459,9 @@ public class GenUnit  : MonoBehaviour
                 else
                 {
                     desiredPosition = gameObject.transform.position + new Vector3(-direction, 0, 0);
+                    controller.SelectedUnit = null;
+                    movementlock = true;
+                    controller.MoveOptions.gameObject.SetActive(false);
 
                 }
                 
@@ -415,6 +490,9 @@ public class GenUnit  : MonoBehaviour
                 Switchbuddy = controller.SwitchUnitRight.GetComponent<GenUnit>();
                 desiredPosition = gameObject.transform.position + new Vector3(+direction, 0, 0);
                 Switchbuddy.desiredPosition = gameObject.transform.position;
+                controller.SelectedUnit = null;
+                movementlock = true;
+                controller.MoveOptions.gameObject.SetActive(false);
 
             }
                                    
@@ -429,6 +507,9 @@ public class GenUnit  : MonoBehaviour
                 else
                 {
                     desiredPosition = gameObject.transform.position + new Vector3(+direction, 0, 0);
+                    movementlock = true;
+                    controller.SelectedUnit = null;
+                    controller.MoveOptions.gameObject.SetActive(false);
 
                 }
                 
@@ -446,7 +527,10 @@ public class GenUnit  : MonoBehaviour
         if (IsinStance1 == false)
         {
             IsinStance1 = true;
-            
+            switchlock = true;
+            controller.SelectedUnit = null;
+            controller.MainOptions.gameObject.SetActive(false);
+
 
         }
 
@@ -454,7 +538,10 @@ public class GenUnit  : MonoBehaviour
         {
             
             IsinStance1 = false;
-            
+            switchlock = true;
+            controller.SelectedUnit = null;
+            controller.MainOptions.gameObject.SetActive(false);
+
         }
     }
     public void MoveToHand()
@@ -497,8 +584,18 @@ public class GenUnit  : MonoBehaviour
         controller.DamageCanvas.gameObject.SetActive(true);
         controller.DamageShowText.text = $"<color=#ff0000>-{DamageDealt}" + "<color=#228b22>HP";
         controller.DamageShowText.GetComponent<FollowWorld>().lookAt = TheEnemy.gameObject;
-       // controller.DamageShowText.color = Color.red;
-        controller.DamageShowText.fontSize = 15;
+        controller.DamageShowText.fontSize = 25;
+        Invoke("DamDisplayDeact", 1);
+
+    }
+
+    public void MissDisplay()
+    {
+        controller.DamageCanvas.gameObject.SetActive(true);
+        controller.DamageShowText.color = Color.white;
+        controller.DamageShowText.text = $"Opponent is too fast to hit";
+        controller.DamageShowText.GetComponent<FollowWorld>().lookAt = TheEnemy.gameObject;
+        controller.DamageShowText.fontSize = 25;
         Invoke("DamDisplayDeact", 1);
 
     }

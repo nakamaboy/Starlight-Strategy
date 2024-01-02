@@ -61,6 +61,15 @@ public class WeissSchnee : GenUnit
     // Update is called once per frame
     void Update()
     {
+        if (UnitData.health <= 0)
+        {
+            IsDestroyedCard = true;
+        }
+        if (UnitData.health > 0)
+        {
+            IsDestroyedCard = false;
+        }
+
 
         if (transform.position.y == 0)
         {

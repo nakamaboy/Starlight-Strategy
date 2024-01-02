@@ -21,8 +21,10 @@ public class TurnManager : MonoBehaviour
     public bool isEndPhase;
     public bool DrawRouteActive;
     public bool StandbyRouteActive;
+    public bool MainPhaRouteActive;
     public int MaxMP;
     public int newMP;
+    public int ChainLinkAct;
     public PlayerDetstring PlayerData;
     public UnityEvent<PlayerDetails> MPChangeEvent;
     [SerializeField] private TextMeshProUGUI PlayInfoTMP;
@@ -55,6 +57,7 @@ public class TurnManager : MonoBehaviour
         PhaseText.gameObject.SetActive(false);
         PhTextMoveSpeed = 300;
         DrawRouteActive = false;
+        StandbyRouteActive = false;
         
 
 
@@ -80,7 +83,17 @@ public class TurnManager : MonoBehaviour
                 DrawRouteActive = true;
 
             }
-           
+            if (DeckMan.SearchDone == true)
+            {
+                isStandbyPhase = true;             
+                DrawRouteActive = false;
+                Debug.Log("DrawPhase Enum has finished running now.");
+                StopCoroutine(DrawPhaseEnum());
+                isDrawPhase = false;
+
+            }
+            
+
 
 
         }
@@ -94,6 +107,17 @@ public class TurnManager : MonoBehaviour
 
             }
                        
+
+        }
+        if (isMainPhase)
+        {
+            if (MainPhaRouteActive == false)
+            {
+                StartCoroutine(MainPhaseEnum());
+                MainPhaRouteActive = true;
+
+            }
+            
 
         }
 
@@ -163,18 +187,17 @@ public class TurnManager : MonoBehaviour
         PhaseCanvas.gameObject.SetActive(true);
         PhaseText.gameObject.SetActive(true);
         PhaseText.fontSize = 70;
-        PhaseText.text = "Draw phase";     
+        PhaseText.text = "Draw Phase";     
         PhaseText.transform.position = new Vector3(400, 400, 0);
         PhTextDesiredPos = new Vector3(700, 400, 0);
         yield return new WaitForSeconds(0.5f);
         DeckMan.DrawACard();
-            
+        PhaseCanvas.gameObject.SetActive(false);
         yield return new WaitForSeconds(0.5f);
-        isStandbyPhase = true;
-        isDrawPhase = false;
-        DrawRouteActive = false;
-        Debug.Log("DrawPhase Enum has finished running now.");
-        StopCoroutine(DrawPhaseEnum());
+        DeckMan.DeckSearchDisplay();
+        
+
+       
 
     }
     public IEnumerator StandbyPhaseEnum()
@@ -182,15 +205,30 @@ public class TurnManager : MonoBehaviour
         PhaseCanvas.gameObject.SetActive(true);
         PhaseText.gameObject.SetActive(true);
         PhaseText.fontSize = 70;
-        PhaseText.text = "StandbyPhase";
+        PhaseText.text = "Standby Phase";
         PhaseText.transform.position = new Vector3(400, 400, 0);
         PhTextDesiredPos = new Vector3(700, 400, 0);
-        yield return new WaitForSeconds(0.5f);       
+        yield return new WaitForSeconds(0.5f);
+        PhaseCanvas.gameObject.SetActive(false);
         isMainPhase = true;
         isStandbyPhase = false;
         StandbyRouteActive = false;        
         Debug.Log("StandbyPhase Enum has finished running now.");
-        StopCoroutine(DrawPhaseEnum());
+        StopCoroutine(StandbyPhaseEnum());
+
+    }
+    public IEnumerator MainPhaseEnum()
+    {
+        PhaseCanvas.gameObject.SetActive(true);
+        PhaseText.gameObject.SetActive(true);
+        PhaseText.fontSize = 70;
+        PhaseText.text = "Main Phase";
+        PhaseText.transform.position = new Vector3(400, 400, 0);
+        PhTextDesiredPos = new Vector3(700, 400, 0);
+        yield return new WaitForSeconds(0.5f);
+        PhaseCanvas.gameObject.SetActive(false);
+        Debug.Log("MainPhase Enum has finished running now.");
+        StopCoroutine(MainPhaseEnum());
 
     }
 

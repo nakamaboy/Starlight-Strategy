@@ -529,7 +529,7 @@ public class GameCon1 : MonoBehaviour
                 NDeployTile1.onClick.RemoveListener(DeployTile6Check);
                 NDeployTile1.onClick.RemoveListener(DeployTile7Check);
                 NDeployTile1.onClick.RemoveListener(DeployTile8Check);
-                SelectedGenUnit.OnDeployChanges();
+                Invoke("SelectedGenUnit.OnDeployChanges", 1);
 
                 if (SelectedGenUnit.DeployinSta1 == true)
                 {
@@ -674,7 +674,7 @@ public class GameCon1 : MonoBehaviour
         AttackBackBut.onClick.AddListener(SelectedGenUnit.AttackBack);
         AttackLeftBut.onClick.AddListener(SelectedGenUnit.AttackLeft);
         AttackRightBut.onClick.AddListener(SelectedGenUnit.AttackRight);
-
+       
     }
     void MainOptionsSetMeth()
     {
@@ -691,17 +691,39 @@ public class GameCon1 : MonoBehaviour
         SwitchStanceBut.GetComponent<FollowWorld>().offset = (SelectedGenUnit.teams == 0) ? new Vector3(0.15f, 0, -0.15f) : new Vector3(-0.15f, 0, 0.15f);
         MainAttackBut.onClick.AddListener(AttackOptionsSetMeth);
         SwitchStanceBut.onClick.AddListener(SelectedGenUnit.SwitchStance);
-        if (SelectedGenUnit.Isfrozen == true)
+        MainMoveBut.onClick.AddListener(MoveOptionsSetMeth);
+        if (SelectedGenUnit.Isfrozen || SelectedGenUnit.movementlock)
         {
-            MainMoveBut.onClick.RemoveAllListeners();
+            MainMoveBut.gameObject.SetActive(false);
 
         }
         else
         {
-            MainMoveBut.onClick.AddListener(MoveOptionsSetMeth);
+            MainMoveBut.gameObject.SetActive(true);
                       
         }
-              
+        if (SelectedGenUnit.attacklock)
+        {
+            MainAttackBut.gameObject.SetActive(false);
+
+        }
+        else
+        {
+            MainAttackBut.gameObject.SetActive(true);
+
+        }
+        if (SelectedGenUnit.switchlock)
+        {
+            SwitchStanceBut.gameObject.SetActive(false);
+
+        }
+        else
+        {
+            SwitchStanceBut.gameObject.SetActive(true);
+
+        }
+
+
         Debug.Log("MainOptionSetMethod got finished running.");
 
     }

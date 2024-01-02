@@ -49,6 +49,17 @@ public class BlakeBelladonna : GenUnit
         transform.rotation = Quaternion.RotateTowards(transform.rotation, desiredRotation, Time.deltaTime * 150);
         //transform.localScale = Vector3.MoveTowards(transform.localScale, desiredScale, Time.deltaTime * 5);
 
+        if (UnitData.health <= 0)
+        {
+            IsDestroyedCard = true;
+        }
+        if (UnitData.health > 0)
+        {
+            IsDestroyedCard = false;
+        }
+
+
+
         if (transform.position.y == 0)
         {
             IsOnField = true;
